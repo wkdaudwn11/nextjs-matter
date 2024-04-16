@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     if (!boxRef.current || !canvasRef.current) return;
 
-    const { Engine, Render, World, Bodies } = Matter;
+    const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
     const engine = Engine.create({});
 
     const render = Render.create({
@@ -98,7 +98,29 @@ export default function Home() {
       },
     });
 
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false,
+        },
+      },
+    });
+
+    mouseConstraint.mouse.element.removeEventListener(
+      'mousewheel',
+      mouseConstraint.mouse.mousewheel,
+    );
+    mouseConstraint.mouse.element.removeEventListener(
+      'DOMMouseScroll',
+      mouseConstraint.mouse.mousewheel,
+    );
+
+    World.add(engine.world, mouseConstraint);
     World.add(engine.world, [floor, market, members, ezPlay, icon1, icon2]);
+
     Engine.run(engine);
     Render.run(render);
   }, []);
