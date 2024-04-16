@@ -18,21 +18,27 @@ export default function Home() {
       engine,
       canvas: canvasRef.current,
       options: {
-        width: 1000,
-        height: 500,
+        width: window.innerWidth / 2,
+        height: window.innerHeight / 2,
         background: 'rgba(255, 0, 0, 0.5)',
         wireframes: false,
       },
     });
 
-    const floor = Bodies.rectangle(500, 500, 1000, 20, {
-      isStatic: true,
-      render: {
-        fillStyle: 'blue',
+    const floor = Bodies.rectangle(
+      window.innerWidth / 4,
+      window.innerHeight / 2,
+      window.innerWidth / 2,
+      20,
+      {
+        isStatic: true,
+        render: {
+          fillStyle: 'blue',
+        },
       },
-    });
+    );
 
-    const market = Bodies.circle(100, 50, 20, {
+    const market = Bodies.circle(200, 50, 50, {
       density: 0.05,
       frictionAir: 0.03,
       friction: 0.05,
@@ -44,7 +50,7 @@ export default function Home() {
       },
     });
 
-    const members = Bodies.circle(200, 100, 40, {
+    const members = Bodies.circle(400, 100, 50, {
       density: 0.05,
       frictionAir: 0.03,
       friction: 0.05,
@@ -56,7 +62,7 @@ export default function Home() {
       },
     });
 
-    const ezPlay = Bodies.circle(300, 150, 60, {
+    const ezPlay = Bodies.circle(600, 150, 50, {
       density: 0.05,
       frictionAir: 0.03,
       friction: 0.05,
@@ -68,7 +74,7 @@ export default function Home() {
       },
     });
 
-    const icon1 = Bodies.circle(400, 200, 80, {
+    const icon1 = Bodies.circle(800, 200, 50, {
       density: 0.05,
       frictionAir: 0.03,
       friction: 0.05,
@@ -80,7 +86,7 @@ export default function Home() {
       },
     });
 
-    const icon2 = Bodies.circle(500, 250, 100, {
+    const icon2 = Bodies.circle(1000, 250, 50, {
       density: 0.05,
       frictionAir: 0.03,
       friction: 0.05,
@@ -99,7 +105,10 @@ export default function Home() {
 
   return (
     <main className="flex items-center justify-center min-h-screen">
-      <div ref={boxRef} className="w-screen h-screen border bg-slate-500">
+      <div
+        ref={boxRef}
+        className="flex items-center justify-center w-screen h-screen border bg-slate-500"
+      >
         <canvas ref={canvasRef} />
       </div>
     </main>
