@@ -46,6 +46,8 @@ export default function Home() {
       render: {
         sprite: {
           texture: '/images/market.png',
+          xScale: 1,
+          yScale: 1,
         },
       },
     });
@@ -58,6 +60,8 @@ export default function Home() {
       render: {
         sprite: {
           texture: '/images/members.png',
+          xScale: 1,
+          yScale: 1,
         },
       },
     });
@@ -70,6 +74,8 @@ export default function Home() {
       render: {
         sprite: {
           texture: '/images/ez-play.png',
+          xScale: 1,
+          yScale: 1,
         },
       },
     });
@@ -82,6 +88,8 @@ export default function Home() {
       render: {
         sprite: {
           texture: '/images/icon1.png',
+          xScale: 1,
+          yScale: 1,
         },
       },
     });
@@ -94,6 +102,8 @@ export default function Home() {
       render: {
         sprite: {
           texture: '/images/icon2.png',
+          xScale: 1,
+          yScale: 1,
         },
       },
     });
@@ -108,15 +118,6 @@ export default function Home() {
         },
       },
     });
-
-    mouseConstraint.mouse.element.removeEventListener(
-      'mousewheel',
-      mouseConstraint.mouse.mousewheel,
-    );
-    mouseConstraint.mouse.element.removeEventListener(
-      'DOMMouseScroll',
-      mouseConstraint.mouse.mousewheel,
-    );
 
     World.add(engine.world, mouseConstraint);
     World.add(engine.world, [floor, market, members, ezPlay, icon1, icon2]);
