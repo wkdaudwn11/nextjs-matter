@@ -5,42 +5,7 @@ import Matter from 'matter-js';
 
 import { createBodyRectangle, createBodyCircle } from '@/lib/matter';
 
-const bodies = [
-  createBodyRectangle({
-    x: 200,
-    y: 400,
-    width: 269,
-    height: 57,
-    image: 'members.png',
-  }),
-  createBodyRectangle({
-    x: 300,
-    y: 290,
-    width: 238,
-    height: 54,
-    image: 'market.png',
-    angle: 6,
-  }),
-  createBodyRectangle({
-    x: 300,
-    y: 290,
-    width: 238,
-    height: 54,
-    image: 'market.png',
-  }),
-  createBodyCircle({
-    x: 300,
-    y: 290,
-    radius: 50,
-    image: 'icon1.png',
-  }),
-  createBodyCircle({
-    x: 300,
-    y: 290,
-    radius: 50,
-    image: 'icon2.png',
-  }),
-];
+import { getRandomPosition } from '@/lib/util';
 
 const IndexPage = () => {
   const boxRef = useRef(null);
@@ -52,8 +17,8 @@ const IndexPage = () => {
     const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
     const engine = Engine.create({});
 
-    const width = window.innerWidth / 2;
-    const height = window.innerHeight / 2;
+    const width = window.innerWidth / 3;
+    const height = window.innerHeight / 3;
 
     const render = Render.create({
       element: boxRef.current,
@@ -83,6 +48,43 @@ const IndexPage = () => {
       Bodies.rectangle(width / 2, height, width, 10, { isStatic: true }),
       Bodies.rectangle(width, 300, 10, width, { isStatic: true }),
       Bodies.rectangle(0, 300, 10, width, { isStatic: true }),
+    ];
+
+    const bodies = [
+      createBodyRectangle({
+        x: getRandomPosition(width, 269),
+        y: getRandomPosition(height, 57),
+        width: 269,
+        height: 57,
+        image: 'members.png',
+      }),
+      createBodyRectangle({
+        x: getRandomPosition(width, 245),
+        y: getRandomPosition(height, 54),
+        width: 245,
+        height: 54,
+        image: 'market.png',
+        angle: 6,
+      }),
+      createBodyRectangle({
+        x: getRandomPosition(width, 245),
+        y: getRandomPosition(height, 54),
+        width: 245,
+        height: 54,
+        image: 'market.png',
+      }),
+      createBodyCircle({
+        x: getRandomPosition(width, 100),
+        y: getRandomPosition(height, 100),
+        radius: 50,
+        image: 'icon1.png',
+      }),
+      createBodyCircle({
+        x: getRandomPosition(width, 100),
+        y: getRandomPosition(height, 100),
+        radius: 50,
+        image: 'icon2.png',
+      }),
     ];
 
     World.add(engine.world, mouseConstraint);
