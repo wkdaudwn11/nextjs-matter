@@ -3,24 +3,48 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import Matter from 'matter-js';
 
+import { createBodyRectangle, createBodyCircle } from '@/lib/matter';
+
+const bodies = [
+  createBodyRectangle({
+    x: 200,
+    y: 400,
+    width: 269,
+    height: 57,
+    image: 'members.png',
+  }),
+  createBodyRectangle({
+    x: 300,
+    y: 290,
+    width: 238,
+    height: 54,
+    image: 'market.png',
+    angle: 6,
+  }),
+  createBodyRectangle({
+    x: 300,
+    y: 290,
+    width: 238,
+    height: 54,
+    image: 'market.png',
+  }),
+  createBodyCircle({
+    x: 300,
+    y: 290,
+    radius: 50,
+    image: 'icon1.png',
+  }),
+  createBodyCircle({
+    x: 300,
+    y: 290,
+    radius: 50,
+    image: 'icon2.png',
+  }),
+];
+
 const IndexPage = () => {
   const boxRef = useRef(null);
   const canvasRef = useRef(null);
-
-  const createBody = (x: number, y: number, texture: string) =>
-    Matter.Bodies.circle(x, y, 50, {
-      density: 0.05,
-      frictionAir: 0.03,
-      friction: 0.05,
-      restitution: 0.1,
-      render: {
-        sprite: {
-          texture: `/images/${texture}.png`,
-          xScale: 1,
-          yScale: 1,
-        },
-      },
-    });
 
   const setupMatter = useCallback(() => {
     if (!boxRef.current || !canvasRef.current) return;
@@ -43,21 +67,6 @@ const IndexPage = () => {
       },
     });
 
-    const floor = Bodies.rectangle(width / 2, height, width, 20, {
-      isStatic: true,
-      render: {
-        fillStyle: 'blue',
-      },
-    });
-
-    const bodies = [
-      createBody(200, 50, 'market'),
-      createBody(400, 100, 'members'),
-      createBody(600, 150, 'ez-play'),
-      createBody(800, 200, 'icon1'),
-      createBody(1000, 250, 'icon2'),
-    ];
-
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
@@ -69,8 +78,15 @@ const IndexPage = () => {
       },
     });
 
+    const walls = [
+      Bodies.rectangle(width / 2, 0, width, 10, { isStatic: true }),
+      Bodies.rectangle(width / 2, height, width, 10, { isStatic: true }),
+      Bodies.rectangle(width, 300, 10, width, { isStatic: true }),
+      Bodies.rectangle(0, 300, 10, width, { isStatic: true }),
+    ];
+
     World.add(engine.world, mouseConstraint);
-    World.add(engine.world, [floor, ...bodies]);
+    World.add(engine.world, [...walls, ...bodies]);
 
     Engine.run(engine);
     Render.run(render);
@@ -84,7 +100,7 @@ const IndexPage = () => {
     <main className="flex items-center justify-center min-h-screen">
       <div
         ref={boxRef}
-        className="flex items-center justify-center w-screen h-screen border bg-slate-500"
+        className="flex items-center justify-center w-screen h-screen bg-slate-500"
       >
         <canvas ref={canvasRef} />
       </div>
