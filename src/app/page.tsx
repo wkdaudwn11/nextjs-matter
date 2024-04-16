@@ -32,14 +32,67 @@ export default function Home() {
       },
     });
 
-    const ball = Bodies.circle(150, 0, 10, {
-      restitution: 0.9,
+    const market = Bodies.circle(100, 50, 20, {
+      density: 0.05,
+      frictionAir: 0.03,
+      friction: 0.05,
+      restitution: 0.1,
       render: {
-        fillStyle: 'yellow',
+        sprite: {
+          texture: '/images/market.png',
+        },
       },
     });
 
-    World.add(engine.world, [floor, ball]);
+    const members = Bodies.circle(200, 100, 40, {
+      density: 0.05,
+      frictionAir: 0.03,
+      friction: 0.05,
+      restitution: 0.1,
+      render: {
+        sprite: {
+          texture: '/images/members.png',
+        },
+      },
+    });
+
+    const ezPlay = Bodies.circle(300, 150, 60, {
+      density: 0.05,
+      frictionAir: 0.03,
+      friction: 0.05,
+      restitution: 0.1,
+      render: {
+        sprite: {
+          texture: '/images/ez-play.png',
+        },
+      },
+    });
+
+    const icon1 = Bodies.circle(400, 200, 80, {
+      density: 0.05,
+      frictionAir: 0.03,
+      friction: 0.05,
+      restitution: 0.1,
+      render: {
+        sprite: {
+          texture: '/images/icon1.png',
+        },
+      },
+    });
+
+    const icon2 = Bodies.circle(500, 250, 100, {
+      density: 0.05,
+      frictionAir: 0.03,
+      friction: 0.05,
+      restitution: 0.1,
+      render: {
+        sprite: {
+          texture: '/images/icon2.png',
+        },
+      },
+    });
+
+    World.add(engine.world, [floor, market, members, ezPlay, icon1, icon2]);
     Engine.run(engine);
     Render.run(render);
   }, []);
