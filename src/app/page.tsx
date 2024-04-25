@@ -43,6 +43,12 @@ const IndexPage = () => {
       },
     });
 
+    render.canvas.addEventListener(
+      'wheel',
+      (event) => event.stopPropagation(),
+      { passive: true },
+    );
+
     const walls = [
       Bodies.rectangle(width / 2, 0, width, 10, { isStatic: true }),
       Bodies.rectangle(width / 2, height, width, 10, { isStatic: true }),
