@@ -3,7 +3,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import Matter from 'matter-js';
 
-import { createBodyRectangle, createBodyCircle } from '@/lib/matter';
+import {
+  createBodyRectangle,
+  createBodyCircle,
+  collisionStart,
+} from '@/lib/matter';
 
 import { getRandomPosition } from '@/lib/util';
 
@@ -14,11 +18,20 @@ const IndexPage = () => {
   const setupMatter = useCallback(() => {
     if (!boxRef.current || !canvasRef.current) return;
 
-    const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
+    const {
+      Body,
+      Events,
+      Engine,
+      Render,
+      World,
+      Bodies,
+      Mouse,
+      MouseConstraint,
+    } = Matter;
     const engine = Engine.create({});
 
-    const width = window.innerWidth / 3;
-    const height = window.innerHeight / 3;
+    const width = window.innerWidth / 1.5;
+    const height = window.innerHeight / 1.5;
 
     const render = Render.create({
       element: boxRef.current,
@@ -36,7 +49,7 @@ const IndexPage = () => {
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: {
-        stiffness: 0.2,
+        stiffness: 0.003,
         render: {
           visible: false,
         },
@@ -95,9 +108,44 @@ const IndexPage = () => {
 
     World.add(engine.world, mouseConstraint);
     World.add(engine.world, [...walls, ...bodies]);
-
     Engine.run(engine);
     Render.run(render);
+
+    Events.on(engine, 'collisionStart', (e) =>
+      collisionStart(e, mouseConstraint),
+    );
+
+    Events.on(engine, 'collisionEnd', () => {
+      bodies.forEach((body) => {
+        if (
+          body.position.x < 0 ||
+          body.position.x > width ||
+          body.position.y < 0 ||
+          body.position.y > height
+        ) {
+          Body.setPosition(body, {
+            x: getRandomPosition(width, 100) / 2,
+            y: 100,
+          });
+        }
+      });
+    });
+
+    Events.on(mouseConstraint, 'mouseup', () => {
+      bodies.forEach((body) => {
+        if (
+          body.position.x < 0 ||
+          body.position.x > width ||
+          body.position.y < 0 ||
+          body.position.y > height
+        ) {
+          Body.setPosition(body, {
+            x: getRandomPosition(width, 200) / 2,
+            y: getRandomPosition(height, 100) / 2,
+          });
+        }
+      });
+    });
   }, []);
 
   useEffect(() => {

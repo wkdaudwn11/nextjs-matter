@@ -1,4 +1,4 @@
-import Matter from 'matter-js';
+import Matter, { type IEventCollision } from 'matter-js';
 
 import type { BodyRectangle, BodyCircle } from '@/types/matter';
 
@@ -52,3 +52,18 @@ export const createBodyCircle = ({ x, y, radius, image }: BodyCircle) =>
       },
     },
   });
+
+export const collisionStart = (
+  event: IEventCollision<Matter.Engine>,
+  mouseConstraint: Matter.MouseConstraint,
+) => {
+  const { pairs } = event;
+  pairs.forEach(({ bodyA, bodyB }) => {
+    const [wall, body] = bodyA.isStatic ? [bodyA, bodyB] : [bodyB, bodyA];
+
+    if (!wall.isStatic || mouseConstraint.body !== body) return;
+
+    // eslint-disable-next-line no-param-reassign
+    mouseConstraint.mouse.button = -1;
+  });
+};
