@@ -2138,11 +2138,6 @@ matter-js@^0.19.0:
   resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.19.0.tgz#185e518146ae4fa20c33826ebc7e6e42685e3642"
   integrity sha512-v2huwvQGOHTGOkMqtHd2hercCG3f6QAObTisPPHg8TZqq2lz7eIY/5i/5YUV8Ibf3mEioFEmwibcPUF2/fnKKQ==
 
-matter-wrap@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/matter-wrap/-/matter-wrap-0.2.0.tgz#690f4ed1e8ff29c61e8618fc6452da33dd40b2f6"
-  integrity sha512-Gp3tETlN6uZftc1Jnv1sogQd8uB2Xh4c5bQ18qKR6KOMfUlsS8vztrC1vDrZS8eg4MuwE1AgZEcwxI41BSW6oQ==
-
 merge-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"

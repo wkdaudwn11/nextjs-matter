@@ -15,6 +15,29 @@ const frictionAir = 0.05;
 const friction = 0.1;
 const restitution = 0;
 
+export const createBodyRectangle2 = ({
+  x,
+  y,
+  width,
+  height,
+  angle,
+}: BodyRectangle) =>
+  Matter.Bodies.rectangle(x, y, width, height, {
+    density,
+    frictionAir,
+    friction,
+    restitution,
+    angle: angle ?? 0,
+  });
+
+export const createBodyCircle2 = ({ x, y, radius }: BodyCircle) =>
+  Matter.Bodies.circle(x, y, radius, {
+    density,
+    frictionAir,
+    friction,
+    restitution,
+  });
+
 export const createBodyRectangle = ({
   x,
   y,
